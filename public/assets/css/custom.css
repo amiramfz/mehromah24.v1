@@ -1,0 +1,177 @@
+@font-face {
+    font-family: IRANSansXFaNum;
+    font-style: normal;
+    font-weight: 100;
+    src: url('../fonts/IranSansX(Pro)/Farsi/Webfonts/woff/IRANSansXFaNum-Thin.woff') format('woff'),
+        url('../fonts/IranSansX(Pro)/Farsi/Webfonts/woff2/IRANSansXFaNum-Thin.woff2') format('woff2');
+    /* src: url('../../public/assets/fonts/IranSansX(Pro)/Farsi/Webfonts/woff/IRANSansXFaNum-Thin.woff') format('woff'),
+		url('../../public/assets/fonts/IranSansX(Pro)/Farsi/Webfonts/woff2/IRANSansXFaNum-Thin.woff2') format('woff2'); */
+}
+
+body {
+    direction: rtl;
+    font-family: 'IRANSansXFaNum';
+}
+
+/* Text Slider Fade */
+.sliderText {
+    width: 600px;
+    height: 150px;
+    margin: 10px auto;
+    position: relative;
+    font-size: 40px;
+    text-align: center;
+    color: black;
+}
+
+.sliderText .slide1,
+.slide2,
+.slide3,
+.slide4 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+}
+
+.sliderText .slide1 {
+    animation: fade 5s infinite;
+    -webkit-animation: fade 5s infinite;
+}
+
+.sliderText .slide2 {
+    animation: fade2 5s infinite;
+    -webkit-animation: fade2 5s infinite;
+}
+
+.sliderText .slide3 {
+    animation: fade3 5s infinite;
+    -webkit-animation: fade3 5s infinite;
+}
+
+.sliderText .slide4 {
+    animation: fade3 5s infinite;
+    -webkit-animation: fade3 5s infinite;
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+
+    5% {
+        opacity: 1;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    40% {
+        opacity: 0;
+    }
+
+    60% {
+        opacity: 0;
+    }
+
+    80% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes fade2 {
+    0% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 0;
+    }
+
+    80% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes fade3 {
+    0% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 0;
+    }
+
+    45% {
+        opacity: 1;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes fade4 {
+    0% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 0;
+    }
+
+    60% {
+        opacity: 0;
+    }
+
+    65% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Text Slider Fade */

@@ -1,0 +1,177 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.p-datatable {
+  font-family: "IRANSansXFaNum" !important;
+}
+
+tr.p-datatable-emptymessage td {
+  text-align: center !important;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+a.link,
+a:not([role="button"])[target="_blank"] {
+  background: none !important;
+  border-bottom: none !important;
+}
+
+.bg-amber-100-i {
+  background-color: rgb(254 249 195) !important;
+}
+
+.bg-amber-400-i {
+  background-color: #fbbf24 !important;
+}
+
+.bg-gray-400-i {
+  background-color: #bdbdbd !important;
+}
+
+.bg-gray-75-i {
+  background-color: #fafaf9 !important;
+}
+
+.bg-gray-200-i {
+  background-color: #e5e7eb !important;
+}
+
+.bg-gray-300-i {
+  background-color: #d6d3d1 !important;
+}
+
+/* HorizontalMenu.css */
+.horizontal-menu-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: 2px solid #fafaf9;
+  border-radius: 5px;
+}
+
+.scroll-button {
+  font-size: 20px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  margin: 0 5px;
+  height: 50px;
+  padding: 5px 10px;
+}
+
+.scroll-button.left {
+  left: 0;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(221, 221, 221, 1) 50%
+  );
+}
+
+.scroll-button.right {
+  right: 0;
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    -90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(221, 221, 221, 1) 50%
+  );
+}
+
+.horizontal-menu {
+  display: inline-flex;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.day-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 15px;
+  margin: 5px;
+  height: 40px;
+  border: 1px solid #ddd;
+  border-radius: 50px;
+  cursor: pointer;
+  outline: none;
+  flex-wrap: wrap;
+}
+
+.day-container:hover {
+  background-color: #ddd;
+  color: white;
+}
+
+.day-container.active {
+  background-color: #969696;
+  color: white;
+}
+
+/* date range */
+.text-field-first-date-ranger div {
+  border-radius: 0 4px 4px 0 !important;
+}
+
+.text-field-first-date-ranger fieldset {
+  border-left: none !important;
+}
+
+.text-field-end-date-ranger div {
+  border-radius: 4px 0 0 4px !important;
+}
+
+.origin .MuiAutocomplete-popupIndicator,
+.destination .MuiAutocomplete-popupIndicator {
+  display: none;
+}
+
+.origin div {
+  border-radius: 0 4px 4px 0 !important;
+}
+
+.origin fieldset {
+  border-left: none !important;
+}
+
+.destination div {
+  border-radius: 4px 0 0 4px !important;
+}
+
+.destination div div {
+  padding: 10.5px 30px 7.5px 10px !important;
+}
+
+.destination label:not(.Mui-focused) {
+  padding-right: 15px !important;
+}
+
+.destination label.MuiInputLabel-shrink {
+  padding-right: 0 !important;
+}
+
+.origin p,
+.destination p {
+  position: absolute;
+  bottom: -20px;
+}
+
+.custom-date-range .MuiPickersArrowSwitcher-root {
+  display: none;
+}
+
+.Mui-expanded {
+  margin: 0 !important;
+}

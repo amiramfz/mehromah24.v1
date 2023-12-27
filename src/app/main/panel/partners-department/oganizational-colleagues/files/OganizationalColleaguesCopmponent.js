@@ -530,4 +530,4 @@ const OganizationalColleaguesCopmponent = (props) => {
   );
 };
 
-export default OganizationalColleaguesCopmponen
+export default OganizationalColleaguesCopmponent;

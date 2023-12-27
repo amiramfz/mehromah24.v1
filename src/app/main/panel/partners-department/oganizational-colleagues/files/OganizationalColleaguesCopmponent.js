@@ -13,6 +13,7 @@ import CircularIndeterminate from "src/app/custom-components/CircularProgress";
 import AllInboxIcon from '@mui/icons-material/AllInbox';
 import { Button } from 'primereact/button';
 import { Toolbar } from 'primereact/toolbar';
+import fixEnglish from "src/app/custom-components/englishtype";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -30,12 +31,16 @@ import ImportContactsIcon from '@mui/icons-material/ImportContacts';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import Tooltip from "@mui/material/Tooltip";
 import { convertPersianToEnglishNumbers } from '../../../customers/Customer-department/files/functions';
+import fixPersian from "src/app/custom-components/farsitype";
 import {
   ButtonGroup,
   CircularProgress,
   Grid,
   TextField,
 } from "@mui/material";
+import * as yup from "yup";
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 
 const getAccessToken = () => {
@@ -52,6 +57,11 @@ const OganizationalColleaguesCopmponent = (props) => {
   const [showProgressLoading, setShowProgressLoading] = useState(false);
   const [data, setData] = useState([]);
   const [open, setOpen] = React.useState(false);
+  const [creditLimit, setCreditLimit] = useState("")
+  const [amount, setAmount] = useState("")
+  const [year, setYear] = useState("")
+  const [type, setType] = useState("")
+  const [diagnosis, setDiagnosis] = useState("")
   const formatInputWithCommas = (input) => {
     if (!input) {
       return input;
@@ -89,6 +99,27 @@ const OganizationalColleaguesCopmponent = (props) => {
       })
       .catch((error) => console.log(error));
   }
+
+  // function sendData() {
+  //   setShowProgressLoading(true);
+  //   axios
+  //     .post(base_url + "/v2/colleagues/update/financial", {
+  //       lang: langDirection,
+  //       access_token: getAccessToken(),
+  //       item_id: 161,
+  //       credit_limit: "6,310,000,000,000",
+  //       amount: "5,185,028,586",
+  //       year: 1402,
+  //       type: "opening",
+  //       diagnosis: "debit"
+
+  //     })
+  //     .then((response) => {
+  //       setData(response.data);
+  //       setShowProgressLoading(false);
+  //     })
+  //     .catch((error) => console.log(error));
+  // }
   const header = (e) => {
     const searchHandler = (e) => {
       setSearch(searchValue);
@@ -115,7 +146,7 @@ const OganizationalColleaguesCopmponent = (props) => {
       </span>
     </div>
   }
-  
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -128,12 +159,13 @@ const OganizationalColleaguesCopmponent = (props) => {
     console.log("alooooooo");
   }
   const dialogDocumentType = (e) => {
+
     console.log(e.target.value);
   }
   const dialogDiagnosis = (e) => {
     console.log(e.target.value);
   }
-  
+
   const dialogDate = (e) => {
     console.log(convertPersianToEnglishNumbers(e.toLocaleDateString('fa-IR')).replace("/", "-").replace("/", "-"));
   }
@@ -141,13 +173,36 @@ const OganizationalColleaguesCopmponent = (props) => {
     console.log(e.target.value);
   }
   const dialogDebtCeiling = (e) => {
-    console.log(e.target.value);
+    setCreditLimit(e.target.value)
+    console.log();
   }
-
+  const defaultValues = {
+    diagnosis: "",
+    type: "",
+    year: "",
+    amount: "",
+    creditLimit: "",
+  };
+  const schema = yup.object().shape({
+    creditLimit: yup.string().required("باید سقف بدهی را مشخص کنید  "),
+    amount: yup.string().required("باید مقدار  را مشخص کنید  "),
+    year: yup.string().required("باید سقف بدهی را مشخص کنید  "),
+    diagnosis: yup.string().required("باید سقف بدهی را مشخص کنید  "),
+    type: yup.string().required("باید سقف بدهی را مشخص کنید  "),
+  })
+  const { control, formState, trigger, setValue } = useForm({
+    mode: "onChange",
+    defaultValues,
+    resolver: yupResolver(schema),
+  });
+  const { isValid, errors } = formState;
 
   useEffect(() => {
     getData();
   }, [search]);
+  // useEffect(() => {
+  //   sendData();
+  // }, [search]);
 
 
   return (
@@ -411,50 +466,103 @@ const OganizationalColleaguesCopmponent = (props) => {
                 <Dialog open={open} sx={{ backgroundColor: "rgb(0 0 0 / 4%)" }} onClose={handleClose}>
                   <DialogTitle >سند افتتاحیه/اختتامیه {rowData.Title}</DialogTitle>
                   <hr />
+                  <FormControl>
                   <DialogContent sx={{ backgroundColor: "rgb(0 0 0 / 4%)" }}>
                     <div style={{
                       display: "flex",
                       columnGap: "18px",
                       justifyContent: "space-between",
                     }}>
+                      
                       <div>
                         <FormLabel variant="body2" id="demo-radio-buttons-group-label">نوع سند</FormLabel>
-                        <RadioGroup onChange={dialogDocumentType}
-                          aria-labelledby="demo-radio-buttons-group-label"
-                          name="radio-buttons-group"
-                        >
-                          <FormControlLabel value="Opening" control={<Radio />} label="افتتاحیه" />
-                          <FormControlLabel value="closing" control={<Radio />} label="اختتامیه" />
-                        </RadioGroup>
+                        <Controller
+                          name="type"
+                          control={control}
+                          render={({ field }) => (
+                            <RadioGroup
+                              {...field}
+                              value={type}
+                              error={!!errors.type}
+                              helperText={errors?.type?.message}
+                              id="type"
+                              aria-labelledby="demo-radio-buttons-group-label"
+                              name="radio-buttons-group"
+                              onChange={(e) => {
+                                field.onChange(e);
+                                let fixed = fixEnglish(e.target.value);
+                                setType(fixed);
+                              }}
+                            >
+                              <FormControlLabel value="Opening" control={<Radio />} label="افتتاحیه" />
+                              <FormControlLabel value="closing" control={<Radio />} label="اختتامیه" />
+                            </RadioGroup>
+                          )}
+                        />
+
                       </div>
                       <div>
                         <FormLabel variant="body2" id="demo-radio-buttons-group-label" > سال</FormLabel>
                         <br />
-                        <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
-                          <DatePicker sx={{ margin: "15px 0 0 0" }} 
-                          onChange={dialogDate}
-                          views={["year"]} 
-                          slotProps={{
-                            openPickerIcon: { fontSize: 'large' },
-                            openPickerButton: { color: 'secondary' },
-                            textField: {
-                              variant: 'filled',
-                              focused: true,
-                              color: 'secondary',
-                            },
-                          }} label=" سال" />
-                        </LocalizationProvider>
+                        <Controller
+                          name="year"
+                          control={control}
+                          render={({ field }) => (
+                            <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
+                              <DatePicker
+                                helperText={errors?.year?.message}
+                                error={!!errors.year}
+                                id="year"
+                                value={year}
+                                {...field}
+                                sx={{ margin: "7px 0 0 0" ,  }}
+                                views={["year"]}
+                                slotProps={{
+                                  openPickerIcon: { fontSize: 'large' },
+                                  openPickerButton: { color: 'secondary' },
+                                  textField: {
+                                    variant: 'filled',
+                                    focused: true,
+                                    color: 'secondary',
+                                  },
+                                }} label=" سال"
+                                onChange={(e) => {
+                                  field.onChange(e);
+                                  let fixed = fixEnglish(e.target.value);
+                                  setYear(fixed);
+                                }}
+                              />
+                            </LocalizationProvider>
+                          )}
+                        />
+
                       </div>
                       <div>
                         <FormLabel variant="body2" id="demo-radio-buttons-group-label">مبلغ </FormLabel>
-                        <TextField onChange={dialogPrice}
-                         sx={{ margin: "15px 0 0 0" }}
-                          autoFocus
-                          margin="dense"
-                          id="name"
-                          type="number"
-                          fullWidth
-                        // variant="standard"
+                        <Controller
+                          name="amount"
+                          control={control}
+                          render={({ field }) => (
+                            <TextField
+                              {...field}
+                              value={amount}
+                              margin="dense"
+                              id="amount"
+                              type="number"
+                              autoFocus
+                              fullWidth
+                              required
+                              autoComplete="off"
+                              variant="outlined"
+                              error={!!errors.amount}
+                              helperText={errors?.amount?.message}
+                              onChange={(e) => {
+                                field.onChange(e);
+                                let fixed = fixEnglish(e.target.value);
+                                setAmount(fixed);
+                              }}
+                            />
+                          )}
                         />
                       </div>
                       <div>
@@ -473,23 +581,41 @@ const OganizationalColleaguesCopmponent = (props) => {
                     <div>
                       <FormLabel variant="body1" id="demo-radio-buttons-group-label">سقف بدهی </FormLabel>
                       <FormLabel variant="body2" id="demo-radio-buttons-group-label">(سقف ریالی که میتواند در این سیستم متعهد شود.)</FormLabel>
-                      <TextField onChange={dialogDebtCeiling}
-                        sx={{ margin: "15px 0 0 0" }}
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        type="number"
-                        fullWidth
-                      // variant="standard"
+                      <Controller
+                        name="creditLimit"
+                        control={control}
+                        render={({ field }) => (
+                          <TextField
+                            {...field}
+                            value={creditLimit}
+                            sx={{ margin: "15px 0 0 0" }}
+                            autoFocus
+                            margin="dense"
+                            id="creditLimit"
+                            type="number"
+                            fullWidth
+                            required
+                            autoComplete="off"
+                            variant="outlined"
+                            error={!!errors.creditLimit}
+                            helperText={errors?.creditLimit?.message}
+                            onChange={(e) => {
+                              field.onChange(e);
+                              let fixed = fixEnglish(e.target.value);
+                              setCreditLimit(fixed);
+                            }}
+                          />
+                        )}
                       />
+
                     </div>
                   </DialogContent>
-
                   <DialogActions>
                     <Button style={{ fontSize: "20px", backgroundColor: "#6c757d", border: "none" }} onClick={handleClose}>بستن !</Button>
                     <Button style={{ fontSize: "20px" }} onClick={handleClose}>اعمال</Button>
                   </DialogActions>
-                </Dialog></div>)}
+                  </FormControl>
+                </Dialog></div> )}
           />
           <Column
             style={{ width: '8%', fontSize: "14px", textAlign: "center" }}

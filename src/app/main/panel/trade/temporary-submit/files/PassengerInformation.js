@@ -440,7 +440,6 @@ const Person = ({
           .required("باید یک نام شماره ملی وارد کنید")
           .length(10, "شماره ملی باید 10 رقم باشد")
       : yup.string().nullable(),
-
     name: yup.string().required("باید یک نام لاتین وارد کنید"),
     lastName: yup.string().required("باید یک نام خانوادگی لاتین وارد کنید"),
     nameFa: nationalRequired
